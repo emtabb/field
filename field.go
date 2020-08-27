@@ -49,9 +49,17 @@ func (f *Field) Name(name string) *Field {
 	return f
 }
 
+func (f *Field) GetName() string {
+	return f.name
+}
+
 func (f *Field) Data(data []interface {}) *Field {
 	f.setupData(data)
 	return f
+}
+
+func (f *Field) GetData() [] interface{} {
+	return f.data
 }
 
 func (f *Field) SetData(data []interface {}) {
