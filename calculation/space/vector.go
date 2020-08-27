@@ -1,6 +1,6 @@
 package space
 
-import "emtabb/field/calculation/operator"
+import "github.com/emtabb/field/calculation/operator"
 
 type Vector struct {
 	coor []float64

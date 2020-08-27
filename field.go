@@ -1,9 +1,9 @@
 package field
 
 import (
-	. "emtabb/field/statistic/dynamic"
-	. "emtabb/field/calculation/space"
-	"emtabb/field/statistic"
+	. "github.com/emtabb/field/statistic/dynamic"
+	. "github.com/emtabb/field/calculation/space"
+	"github.com/emtabb/field/statistic"
 	"reflect"
 	"errors"
 )

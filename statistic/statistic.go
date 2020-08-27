@@ -1,6 +1,6 @@
 package statistic
 
-import "emtabb/field/statistic/dynamic"
+import "github.com/emtabb/field/statistic/dynamic"
 
 const (
 	NA = "NA"
