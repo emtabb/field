@@ -1,12 +1,14 @@
 package statistic
 
-import "github.com/emtabb/field/statistic/dynamic"
+import "github.com/emtabb/field/src/statistic/dynamic"
 
 const (
 	NA = "NA"
 	NN = "NN"
 	NaN = "NaN"
 	NotANumber = "Not a numbers"
+	NEGATIVE_INFINITY = -999999999999999.99999
+	INFINITY = 999999999999999.99999
 )
 
 type StatisticType struct {
@@ -73,6 +75,15 @@ func Statistic(list []interface {}) StatisticType {
 	return statisticsType
 }
 
+func Integer(list []interface {}) []int {
+	dynamical := new(dynamic.Dynamic).Init()
+	intList := make([]int, 0)
+	for _, data := range list {
+		intList = append(intList, dynamical.Data(data).Integer())
+	}
+	return intList
+}
+
 func Float(list []interface {}) []float32 {
 	dynamical := new(dynamic.Dynamic).Init()
 	floatList := make([]float32, 0)
@@ -120,6 +131,16 @@ func ContainNaN(list []interface {}) []int {
 	return positions
 }
 
+func ContainINFINITY(list []interface {}) []int {
+	positions := make([]int, 0)
+	for i, data := range list {
+		if data == INFINITY || data == NEGATIVE_INFINITY {
+			positions = append(positions, i)
+		}
+	}
+	return positions
+}
+
 func NaNGroupDefinitation() []string{
 	return []string { NA, NN, NaN, NotANumber } 
 }
@@ -132,13 +153,13 @@ func IsContainNaNFromDefinition(data interface{}) bool {
 	return ContainString(data.(string), group)
 }
 
-func Contain(data interface{}, list []interface {}) bool {
-	for _, define := range list {
+func Contain(data interface{}, list []interface {}) (bool, int) {
+	for position, define := range list {
 		if data == define {
-			return true
+			return true, position
 		}
 	}
-	return false
+	return false, 0
 }
 
 func ContainString(data string, list []string) bool {
@@ -148,4 +169,20 @@ func ContainString(data string, list []string) bool {
 		}
 	}
 	return false
+}
+
+func Find(data interface {}, list []interface {}) int {
+	isContain, position := Contain(data, list)
+	if isContain {
+		return position
+	}
+	return -1
+}
+
+func FindArray(data []interface {}, list []interface {}) []int {
+	result := make([]int, len(list))
+	for _, subdata := range data {
+		result = append(result, Find(subdata, list))
+	}
+	return result
 }
