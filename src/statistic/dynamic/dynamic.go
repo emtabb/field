@@ -22,6 +22,11 @@ func (d *Dynamic) Data(data interface {}) *Dynamic {
 	return d
 }
 
+func (d *Dynamic) SetData(data interface {}) {
+	d.data = data
+	d.Type = reflect.TypeOf(d.data)
+}
+
 func (d *Dynamic) Detect() float64 {
 	switch d.Kind() {
 	case reflect.Int:
@@ -36,7 +41,7 @@ func (d *Dynamic) Detect() float64 {
 	default:
 		log.Fatal("Data type can't detect")
 	}
-	return -0.0000000000000000001
+	return -999999999999999.99999
 }
 
 func (d *Dynamic) Kind() reflect.Kind {
@@ -57,6 +62,26 @@ func (d *Dynamic) String() string {
 	default:
 		return "error"
 	}
+}
+
+func (d *Dynamic) SetType(typ reflect.Type) {
+	d.Type = typ
+}
+
+func (d *Dynamic) TypeDouble() (reflect.Type) {
+	return reflect.TypeOf(0.3)
+}
+
+func (d *Dynamic) TypeFloat() (reflect.Type) {
+	return reflect.TypeOf(float32(0.3))
+}
+
+func (d *Dynamic) TypeString() (reflect.Type) {
+	return reflect.TypeOf("")
+}
+
+func (d *Dynamic) TypeInt() (reflect.Type) {
+	return reflect.TypeOf(1)
 }
 
 func (d *Dynamic) Double() float64 {

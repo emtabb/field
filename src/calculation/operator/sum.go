@@ -1,15 +1,12 @@
-package calculate
+package operator
 
 import (
 	"runtime"
-	"fmt"
 )
 
 var _ = runtime.NumCPU()
-var _ = fmt.Sprintf("")
 
-func Sum(array[] float64) float64 {
-	var numCPU = 4	
+func Sum(array[] float64, numCPU int) float64 {
 	channels := createMultiChannelFloat64(numCPU)
 	return calculateSum(array, numCPU, channels)
 }

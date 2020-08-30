@@ -1,4 +1,4 @@
-package calculate
+package operator
 
 func createMultiChannelFloat64(numCPU int) []chan float64 {
 	channels := make([]chan float64, numCPU)

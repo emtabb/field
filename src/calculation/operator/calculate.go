@@ -1,4 +1,4 @@
-package calculate
+package operator
 
 func calculateAddArray(array []float64, addarray []float64, numCPU int, channels []chan []float64) []float64 {
 	addChannel := make([]float64, len(array))
@@ -50,4 +50,17 @@ func calculateMultiArray(array []float64, multiArray []float64, numCPU int, chan
 		multiChannel += <- channels[i]
 	}
 	return multiChannel
+}
+
+func calculateTransform(array []float64, matrix [][]float64, numCPU int, channels []chan []float64) []float64 {
+	scaleChannel := make([]float64, len(array))
+	for i := 0; i < numCPU; i++ {
+		from := int(i * len(array) / numCPU)
+		to := int((i + 1) * len(array) / numCPU)
+		go matmulRoutine(array[from:to], matrix[from:to], channels[i])
+	}
+	for i := 0; i < numCPU; i++ {
+		scaleChannel = append(scaleChannel, <- channels[i]...)
+	}
+	return scaleChannel
 }
